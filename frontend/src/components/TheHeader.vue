@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import Logo from "@/assets/logo-govirtual.webp";
+import Logo from "@/assets/sitedesign-logo.jpg";
 export default {
   data() {
     return {
@@ -30,7 +30,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: black !important;
+  background-color: white !important;
   border-bottom: 1px solid #000;
   padding: 10px 20px;
   height: 60px;
@@ -46,7 +46,7 @@ export default {
 /* Toggle button styling */
 .sidebar-toggle {
   background-color: transparent;
-  color: white;
+  color: black;
   border: none;
   padding: 6px 10px;
   font-size: 18px;
@@ -63,7 +63,7 @@ export default {
   border: 1px solid #000;
   padding: 5px 10px;
   background: transparent;
-  color: white;
+  color: black;
   cursor: pointer;
 }
 </style>
