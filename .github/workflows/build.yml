@@ -1,0 +1,20 @@
+name: Log Push Info
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  log-push-info:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Show who pushed and commit info
+        run: |
+          echo "Push triggered by: ${{ github.actor }}"
+          echo "Commit message: ${{ github.event.head_commit.message }}"
+          echo "Commit timestamp: ${{ github.event.head_commit.timestamp }}"
