@@ -40,9 +40,11 @@ router.post('/', async (req, res) => {
     });
 
     const newUser = await user.save();
-    res.status(201).json(newUser);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
+    req.io.emit('user:created', newUser);
+
+      res.status(201).json(newUser);
+  } catch (error) {
+      res.status(500).json({ message: error.message });
   }
 });
 
@@ -67,9 +69,11 @@ router.put('/:id', async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    res.json(updatedUser);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
+    req.io.emit('user:updated', updatedUser);
+
+      res.status(201).json(updatedUser);
+  } catch (error) {
+      res.status(500).json({ message: error.message });
   }
 });
 
@@ -81,6 +85,9 @@ router.delete('/:id', async (req, res) => {
     if (!deletedUser) {
       return res.status(404).json({ message: 'User not found' });
     }
+
+    // Emit event ke semua client bahwa user dihapus
+    req.io.emit('user:deleted', deletedUser);
 
     res.json({ message: 'User deleted successfully' });
   } catch (err) {

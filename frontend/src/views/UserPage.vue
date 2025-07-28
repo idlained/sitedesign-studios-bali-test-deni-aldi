@@ -86,10 +86,12 @@
 
 <script>
 import axios from "axios";
+import { io } from "socket.io-client";
 
 export default {
   data() {
     return {
+      socket: io("http://localhost:3000"),
       selectedUser: null,
       showViewModal: false,
       users: [],
@@ -194,6 +196,25 @@ export default {
   },
   created() {
     this.fetchUsers();
+
+    this.socket.on("user:created", (user) => {
+      this.users.push(user);
+    });
+
+    this.socket.on("user:updated", (updatedUser) => {
+      const index = this.users.findIndex((u) => u._id === updatedUser._id);
+      if (index !== -1) {
+        this.users.splice(index, 1, updatedUser);
+      }
+    });
+
+    this.socket.on("user:deleted", (deletedUser) => {
+      this.users = this.users.filter((u) => u._id !== deletedUser._id);
+    });
+  },
+
+  beforeUnmount() {
+    this.socket.disconnect();
   },
 };
 </script>
